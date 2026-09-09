@@ -123,7 +123,7 @@ national_map = f'''<svg class="map-svg" viewBox="-{GUTTER} 0 {NAT["width"] + 2 *
     <rect x="{bx0:.1f}" y="{by0:.1f}" width="{bx1 - bx0:.1f}" height="{by1 - by0:.1f}" rx="4"/>
     <path class="leader" d="M{bx1:.1f} {(by0 + by1) / 2:.1f}L{NAT["width"] - 20:.0f} {mb_y:.1f}L{NAT["width"] + 14:.0f} {mb_y:.1f}"/>
     <text class="lbl" x="{NAT["width"] + 22:.0f}" y="{mb_y - 3:.1f}">Greater Kampala</text>
-    <text class="sub" x="{NAT["width"] + 22:.0f}" y="{mb_y + 18:.1f}">5 sites &#183; see detail</text>
+    <text class="sub" x="{NAT["width"] + 22:.0f}" y="{mb_y + 18:.1f}">5 sites</text>
   </g>
   {metro_dots}
 {national_sites}

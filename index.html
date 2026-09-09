@@ -4,38 +4,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --paper:#FAF7F6; --card:#FFFFFF; --ink:#1B2133; --muted:#636B81; --rule:#EBE0DD;
+  --paper:#FFFFFF; --card:#FFFFFF; --ink:#1B2133; --muted:#636B81; --rule:#EBE0DD;
   --land:#F2D5D0; --land-line:#CB9188; --district:#E2B4AC;
   --water:#C5D9E7; --water-line:#98B9CF;
   --mark:#1C2C6E; --mark-hi:#4054C6; --clay:#B96C61;
-  --shadow:0 1px 2px rgba(43,26,24,.05), 0 12px 40px -18px rgba(43,26,24,.30);
+  --shadow:0 1px 2px rgba(43,26,24,.06), 0 10px 30px -18px rgba(43,26,24,.28);
   --serif:"Newsreader",Georgia,"Times New Roman",serif;
   --sans:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#101219; --card:#181B24; --ink:#ECEAF1; --muted:#99A1B6; --rule:#2A2E3B;
-    --land:#452F33; --land-line:#8B615E; --district:#5B4044;
-    --water:#1A2937; --water-line:#3A5A70;
-    --mark:#93A8FF; --mark-hi:#C3CEFF; --clay:#D28C7F;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 48px -20px rgba(0,0,0,.7);
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#101219; --card:#181B24; --ink:#ECEAF1; --muted:#99A1B6; --rule:#2A2E3B;
-  --land:#452F33; --land-line:#8B615E; --district:#5B4044;
-  --water:#1A2937; --water-line:#3A5A70;
-  --mark:#93A8FF; --mark-hi:#C3CEFF; --clay:#D28C7F;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 48px -20px rgba(0,0,0,.7);
-}
-
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);
   font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-.page{max-width:1240px;margin:0 auto;padding:clamp(16px,3.4vw,44px)}
-.card{background:var(--card);border:1px solid var(--rule);border-radius:14px;
-  box-shadow:var(--shadow);overflow:hidden}
+.page{max-width:1240px;margin:0 auto;padding:clamp(14px,2.4vw,30px)}
+.card{background:var(--card);overflow:hidden}
 
 /* ---- header ---- */
 .head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px 40px;
@@ -56,8 +38,7 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
 
 /* ---- body grid ---- */
 .body{display:grid;grid-template-columns:minmax(0,1fr) 336px}
-.map-wrap{position:relative;padding:14px clamp(8px,1.6vw,18px) 6px;min-width:0;
-  display:flex;flex-direction:column;justify-content:center}
+.map-wrap{position:relative;padding:16px clamp(8px,1.6vw,18px) 16px;min-width:0;align-self:center}
 .map-svg{display:block;width:100%;height:auto}
 .rail{border-left:1px solid var(--rule);padding:24px 26px 26px;
   display:flex;flex-direction:column;gap:24px;min-width:0}
@@ -157,7 +138,7 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
         <h1>15 sites across 14 districts</h1>
         <p class="lede">Every marker sits at the coordinates of its district headquarters, drawn
           on Uganda&rsquo;s actual borders, districts and lakes. The five Greater Kampala sites fall
-          within one 75&nbsp;km span, so they are broken out at 2.6&times; in the detail map.</p>
+          within one 75&nbsp;km span, so they are enlarged 2.6&times; in the panel at right.</p>
       </div>
       <dl class="stats">
         <div><dt>Sites</dt><dd>15</dd></div>
@@ -194,7 +175,7 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
     <rect x="486.0" y="669.8" width="122.6" height="81.2" rx="4"/>
     <path class="leader" d="M608.6 710.4L980 759.1L1014 759.1"/>
     <text class="lbl" x="1022" y="756.1">Greater Kampala</text>
-    <text class="sub" x="1022" y="777.1">5 sites &#183; see detail</text>
+    <text class="sub" x="1022" y="777.1">5 sites</text>
   </g>
   <g class="site dot" data-site="wakiso" aria-hidden="true"><circle class="halo" cx="532.7" cy="696.1" r="15"/><circle class="dot-mark" cx="532.7" cy="696.1" r="6.4"/></g><g class="site dot" data-site="mukono" aria-hidden="true"><circle class="halo" cx="586.1" cy="705.3" r="15"/><circle class="dot-mark" cx="586.1" cy="705.3" r="6.4"/></g><g class="site dot" data-site="kampala" aria-hidden="true"><circle class="halo" cx="554.9" cy="712.2" r="15"/><circle class="dot-mark" cx="554.9" cy="712.2" r="6.4"/><circle class="badge-dot sm" cx="563.9" cy="703.2" r="6.6"/><text class="badge-num sm" x="563.9" y="705.8">2</text></g><g class="site dot" data-site="mpigi" aria-hidden="true"><circle class="halo" cx="506.4" cy="728.4" r="15"/><circle class="dot-mark" cx="506.4" cy="728.4" r="6.4"/></g>
 <g class="site" tabindex="0" role="listitem" data-site="adjumani"
@@ -317,7 +298,7 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
       <aside class="rail">
         <section>
           <h2>Greater Kampala</h2>
-          <p class="hint">Detail of the boxed area &mdash; four districts, five sites.</p>
+          <p class="hint">The boxed area, enlarged: four districts, five sites.</p>
           <svg class="inset-svg" viewBox="0 0 320 212"
      role="list" aria-label="Greater Kampala detail map">
   <defs>
