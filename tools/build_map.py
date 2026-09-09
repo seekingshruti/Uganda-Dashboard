@@ -9,7 +9,7 @@ SITES = json.load(open(os.path.join(ROOT, "data", "sites.json")))["sites"]
 
 NAT, INS = GEO["national"], GEO["inset"]
 GUTTER = 260          # label column either side of the national map
-LABEL_GAP = 64        # minimum vertical spacing between stacked labels (name + subregion)
+LABEL_GAP = 72        # minimum vertical spacing between stacked labels (name + subregion)
 SIDE = {"Adjumani": -1, "Oyam": -1, "Hoima": -1, "Ntoroko": -1,
         "Abim": 1, "Kole": 1, "Nabilatuk": 1, "Kapelebyong": 1, "Serere": 1, "Iganga": 1}
 
