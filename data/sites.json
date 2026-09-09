@@ -1,0 +1,19 @@
+{
+  "program": "Uganda site network",
+  "sites": [
+    { "name": "Adjumani",    "district": "Adjumani",    "subregion": "West Nile", "region": "Northern", "lat": 3.3778, "lon": 31.7906, "count": 1 },
+    { "name": "Abim",        "district": "Abim",        "subregion": "Karamoja",  "region": "Northern", "lat": 2.7080, "lon": 33.6760, "count": 1 },
+    { "name": "Kole",        "district": "Kole",        "subregion": "Lango",     "region": "Northern", "lat": 2.4189, "lon": 32.7997, "count": 1 },
+    { "name": "Oyam",        "district": "Oyam",        "subregion": "Lango",     "region": "Northern", "lat": 2.3800, "lon": 32.4500, "count": 1 },
+    { "name": "Nabilatuk",   "district": "Nabilatuk",   "subregion": "Karamoja",  "region": "Northern", "lat": 2.0100, "lon": 34.5600, "count": 1 },
+    { "name": "Kapelebyong", "district": "Kapelebyong", "subregion": "Teso",      "region": "Eastern",  "lat": 1.9700, "lon": 33.8300, "count": 1 },
+    { "name": "Serere",      "district": "Serere",      "subregion": "Teso",      "region": "Eastern",  "lat": 1.5000, "lon": 33.5500, "count": 1 },
+    { "name": "Iganga",      "district": "Iganga",      "subregion": "Busoga",    "region": "Eastern",  "lat": 0.6093, "lon": 33.4686, "count": 1 },
+    { "name": "Hoima",       "district": "Hoima",       "subregion": "Bunyoro",   "region": "Western",  "lat": 1.4350, "lon": 31.3520, "count": 1 },
+    { "name": "Ntoroko",     "district": "Ntoroko",     "subregion": "Rwenzori",  "region": "Western",  "lat": 1.0200, "lon": 30.4800, "count": 1 },
+    { "name": "Wakiso",      "district": "Wakiso",      "subregion": "Buganda",   "region": "Central",  "lat": 0.4040, "lon": 32.4590, "count": 1 },
+    { "name": "Mukono",      "district": "Mukono",      "subregion": "Buganda",   "region": "Central",  "lat": 0.3530, "lon": 32.7550, "count": 1 },
+    { "name": "Kampala",     "district": "Kampala",     "subregion": "Buganda",   "region": "Central",  "lat": 0.3150, "lon": 32.5820, "count": 2 },
+    { "name": "Mpigi",       "district": "Mpigi",       "subregion": "Buganda",   "region": "Central",  "lat": 0.2250, "lon": 32.3130, "count": 1 }
+  ]
+}
