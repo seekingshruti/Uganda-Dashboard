@@ -1,0 +1,169 @@
+{
+  "report": "Report on the Activities of Portable X-ray Devices in Tajikistan — 2025",
+  "sites": [
+    {
+      "no": "1, 2",
+      "name": "Dushanbe",
+      "centre": "Republican TB Protection Centre + Dushanbe city centre",
+      "adm2": null,
+      "region": "Dushanbe",
+      "point": [
+        38.56,
+        68.7739
+      ],
+      "pointSource": "city",
+      "devices": 2,
+      "screened": 16001,
+      "presumptive": 857,
+      "detected": 53,
+      "confirmed": 10
+    },
+    {
+      "no": "3",
+      "name": "Rudaki",
+      "centre": "Rudaki district centre",
+      "adm2": "Rudaki District",
+      "region": "Districts of Republican Subordination",
+      "devices": 1,
+      "screened": 5337,
+      "presumptive": 324,
+      "detected": 17,
+      "confirmed": 15
+    },
+    {
+      "no": "4",
+      "name": "Rasht",
+      "centre": "Rasht district centre",
+      "adm2": "Rasht District",
+      "region": "Districts of Republican Subordination",
+      "devices": 1,
+      "screened": 2268,
+      "presumptive": 20,
+      "detected": 6,
+      "confirmed": 4
+    },
+    {
+      "no": "5",
+      "name": "Mastchoh",
+      "centre": "Mastchoh district centre",
+      "adm2": "Mastchoh District",
+      "region": "Sughd Region",
+      "devices": 1,
+      "screened": 5271,
+      "presumptive": 122,
+      "detected": 7,
+      "confirmed": 7
+    },
+    {
+      "no": "6",
+      "name": "Panjakent",
+      "centre": "Panjakent district centre",
+      "adm2": "Panjakent District",
+      "region": "Sughd Region",
+      "devices": 1,
+      "screened": 7822,
+      "presumptive": 680,
+      "detected": 13,
+      "confirmed": 6,
+      "point": [
+        39.4953,
+        67.61
+      ],
+      "pointSource": "city"
+    },
+    {
+      "no": "7",
+      "name": "Dehmoy",
+      "centre": "Regional TB Protection Centre — Dehmoy",
+      "adm2": "Ghafurov District",
+      "region": "Sughd Region",
+      "devices": 1,
+      "screened": 9216,
+      "presumptive": 1606,
+      "detected": 38,
+      "confirmed": 17
+    },
+    {
+      "no": "8",
+      "name": "Khuroson",
+      "centre": "Khuroson district centre",
+      "adm2": "Khuroson District",
+      "region": "Khatlon Region",
+      "devices": 1,
+      "screened": 3432,
+      "presumptive": 198,
+      "detected": 13,
+      "confirmed": 11
+    },
+    {
+      "no": "9",
+      "name": "J. Balkhi",
+      "centre": "Jaloliddin Balkhi district centre",
+      "adm2": "Rumi District",
+      "region": "Khatlon Region",
+      "devices": 1,
+      "screened": 4438,
+      "presumptive": 487,
+      "detected": 38,
+      "confirmed": 18
+    },
+    {
+      "no": "10",
+      "name": "Bokhtar",
+      "centre": "Regional TB Protection Centre — Bokhtar",
+      "adm2": "Bokhtar District",
+      "region": "Khatlon Region",
+      "point": [
+        37.8373,
+        68.7713
+      ],
+      "pointSource": "city",
+      "devices": 2,
+      "screened": 16678,
+      "presumptive": 536,
+      "detected": 71,
+      "confirmed": 28
+    },
+    {
+      "no": "11",
+      "name": "Dangara",
+      "centre": "Danghara district centre",
+      "adm2": "Danghara District",
+      "region": "Khatlon Region",
+      "devices": 1,
+      "screened": 4651,
+      "presumptive": 105,
+      "detected": 8,
+      "confirmed": 4
+    },
+    {
+      "no": "12",
+      "name": "Kulob",
+      "centre": "Regional TB Protection Centre — Kulob",
+      "adm2": "Kulob District",
+      "region": "Khatlon Region",
+      "point": [
+        37.9212,
+        69.7757
+      ],
+      "pointSource": "city",
+      "devices": 1,
+      "screened": 3669,
+      "presumptive": 195,
+      "detected": 7,
+      "confirmed": 1
+    }
+  ],
+  "unmapped": [
+    {
+      "no": "13",
+      "name": "Correctional Institutions",
+      "note": "Deployed across the prison system, not a single location",
+      "devices": 2,
+      "screened": 9999,
+      "presumptive": 342,
+      "detected": 10,
+      "confirmed": 2
+    }
+  ]
+}
