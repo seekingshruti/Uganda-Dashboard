@@ -180,8 +180,8 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
         <h1>$devices devices across $centres centres and a mobile rotation</h1>
         <p class="lede">Each marker is a centre operating one or more portable X-ray units, placed on
           Tajikistan&rsquo;s real district and region boundaries; shaded districts are the ones hosting a
-          device. Alongside the $reported_devices devices in the 2025 report sits a $programme mobile
-          workflow, coordinated from $rot_base and rotating across four hatched districts.
+          device. Alongside the $reported_devices devices in the 2025 report sits one mobile CXR
+          workflow, coordinated from $rot_base and rotating across the four hatched districts.
           $unmapped_devices units serve correctional institutions nationwide and have no single location,
           so they are counted but not mapped.</p>
       </div>
@@ -200,7 +200,7 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
     <div class="panels">
       <section class="panel">
         <h2>From screening to confirmation</h2>
-        <p class="hint">The $reported_devices devices in the 2025 report, full year. The $programme workflow is not in that table.</p>
+        <p class="hint">The $reported_devices devices in the 2025 report, full year. The mobile workflow is not in that table.</p>
         $cascade
       </section>
 
@@ -216,16 +216,18 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(27px,3.4vw,
           <li><svg width="15" height="19" viewBox="-8 -32 16 34" aria-hidden="true"><path d="M0 0c-7.2-10.4-13-17-13-23.5a13 13 0 1 1 26 0C13-17 7.2-10.4 0 0Z" fill="var(--mark)" transform="scale(.6)"/></svg> Centre with a device</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="6" cy="9" r="4" fill="var(--mark)"/><circle cx="12" cy="4" r="4" fill="var(--clay)"/><text x="12" y="7" font-size="6" fill="var(--card)" text-anchor="middle">2</text></svg> Two devices at one centre</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="4" width="14" height="8" fill="var(--land-site)" stroke="var(--district)"/></svg> District hosting a device</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.4" fill="none" stroke="var(--clay)" stroke-width="1.8"/><circle cx="8" cy="8" r="1.7" fill="var(--clay)"/></svg> District on the mobile rotation</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="4" width="14" height="8" fill="#F6E2DE" stroke="var(--district)"/><path d="M2 12 12 2M7 13 16 4" stroke="var(--clay)" stroke-width="1.2" opacity=".55"/></svg> District on the mobile rotation</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.4" fill="none" stroke="var(--clay)" stroke-width="1.8"/><circle cx="8" cy="8" r="1.7" fill="var(--clay)"/></svg> Mobile rotation marker</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h14" stroke="var(--region)" stroke-width="1.6"/></svg> Region boundary</li>
           <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 11c4-6 5 2 8-3 1.5-2.5 3-3 6-3" stroke="var(--water-line)" stroke-width="1.6" fill="none"/></svg> River</li>
         </ul>
         <div class="notes">
           <p><b>Not mapped</b> Correctional institutions: $unmapped_devices devices,
             $unmapped_screened screened, spread across the prison system.</p>
-          <p><b>Mobile rotation</b> $programme: $rot_districts. Coordinated from $rot_base and counted
-            in the device total, but it reports no screening figures in this table, so every count below
-            covers the $reported_devices reported devices only.</p>
+          <p><b>Mobile rotation</b> One mobile CXR workflow coordinated from $rot_base, rotating across
+            $rot_districts, for Afghan-immigrant active case finding and mobile / high-risk populations.
+            Counted in the device total, but it reports no screening figures in this table, so every
+            count in the cascade covers the $reported_devices reported devices only.</p>
           <p><b>Marker placement</b> City centres for Dushanbe, Bokhtar, Kulob and Panjakent; for the
             district-named centres, the interior point of the district furthest from its own boundary.
             Markers show which district a device serves, not a facility address.</p>

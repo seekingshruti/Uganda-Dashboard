@@ -102,21 +102,6 @@ for d in ROT["districts"]:
         f'<circle class="rot-dot" cx="{d["x"]:.1f}" cy="{d["y"]:.1f}" r="1.7"/>'
         f'<text class="rot-lbl" x="{d["x"] + dx:.1f}" y="{d["y"] + dy:.1f}">{esc(d["name"])}</text></g>')
 
-cx, cy = 628, 34
-callout_lines = [
-    (0, f'{ROT["devices"]} mobile CXR workflow, coordinated from {ROT["base"]}'),
-    (20, "Rotating across " + ", ".join(d["name"] for d in ROT["districts"][:3]) + ","),
-    (38, "and " + ROT["districts"][3]["name"] + " districts"),
-    (64, "Afghan-immigrant active case finding;"),
-    (82, "mobile and high-risk populations"),
-]
-callout = f'''<g class="callout" transform="translate({cx} {cy})">
-  <text class="callout-h" x="0" y="0">{esc(ROT["programme"])} &#183; field operations</text>
-  {"".join(f'<text class="callout-t" x="0" y="{22 + dy}">{esc(t)}</text>' for dy, t in callout_lines)}
-  <rect class="rot-swatch" x="0" y="128" width="17" height="12" rx="2"/>
-  <text class="callout-t" x="25" y="138">districts on the rotation</text>
-</g>'''
-
 km_bar = 100 / NAT["kmPerPt"]
 lakes = "".join(f'<path class="lake" d="{l["d"]}"/>' for l in NAT["lakes"])
 national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTER:.0f} {NAT["height"] + 42:.0f}"
@@ -145,7 +130,6 @@ national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTE
 {"".join(gutter_label(BY[k]) for k in GUTTER_SITES)}
 {"".join(inside_label(BY[k]) for k in INSIDE)}
   {"".join(rot_marks)}
-  {callout}
   <g class="furniture">
     <g transform="translate(-210 52)">
       <path class="compass" d="M0-22 8 8 0 1-8 8Z"/><text class="compass-n" x="0" y="26">N</text>
@@ -204,7 +188,7 @@ html = Template(open(os.path.join(ROOT, "tools", "template_tj.html")).read()).su
     tip_data=json.dumps(tip, separators=(",", ":")),
     devices=total["devices"], reported_devices=reported_devices,
     centres=sum(len(s["no"].split(",")) for s in SITES) + len(UNMAPPED),
-    programme=ROT["programme"], rot_base=ROT["base"],
+    rot_base=ROT["base"],
     rot_districts=", ".join(d["name"] for d in ROT["districts"]),
     screened=n(total["screened"]), confirmed=n(total["confirmed"]),
     unmapped_devices=sum(u["devices"] for u in UNMAPPED),
