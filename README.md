@@ -68,7 +68,8 @@ Neither script needs anything outside the standard library.
 
 ## Tajikistan portable X-ray devices
 
-Built from the 2025 report on portable X-ray activity: 15 devices across 13 reporting centres.
+Built from the 2025 report on portable X-ray activity — 15 devices across 13 reporting centres —
+plus one STOP TB Partnership mobile workflow added on top of that table.
 
 | Path | What it is |
 | --- | --- |
@@ -104,6 +105,13 @@ python3 tools/build_tj_map.py
 
 * **Correctional institutions (2 devices, 9,999 screened) are counted but not mapped** — they
   are deployed across the prison system rather than at one location.
+* **The STOP TB Partnership workflow is not in the report table.** It is 1 mobile CXR unit
+  coordinated from Dushanbe, rotating across Muminobod, Ayni, Istaravshan and Konibodom (the
+  boundary data's spellings of Muminabad and Kanibadam), targeting Afghan-immigrant active case
+  finding and mobile/high-risk populations. It counts toward the 16-device total and toward
+  Dushanbe in the regional breakdown, but reports no screening figures, so every count in the
+  cascade covers the 15 reported devices only. Its districts are drawn hatched with ring markers
+  rather than shaded with pins, because the unit covers them on rotation rather than sitting in one.
 * Jaloliddin Balkhi district appears in the boundary data under its former name, **Rumi**.
 * Dehmoy is anchored to **Ghafurov district**, which contains the village; Rasht and Mastchoh
   anchors sit 10-25 km from their district centre towns, which is the cost of the interior-point

@@ -165,5 +165,35 @@
       "detected": 10,
       "confirmed": 2
     }
-  ]
+  ],
+  "rotation": {
+    "programme": "STOP TB Partnership",
+    "base": "Dushanbe",
+    "devices": 1,
+    "workflow": "1 mobile CXR workflow, Dushanbe-linked coordination",
+    "focus": "Afghan-immigrant active case finding; mobile and high-risk populations",
+    "districts": [
+      {
+        "name": "Muminobod",
+        "adm2": "Muminobod District",
+        "region": "Khatlon Region"
+      },
+      {
+        "name": "Ayni",
+        "adm2": "Ayni District",
+        "region": "Sughd Region"
+      },
+      {
+        "name": "Istaravshan",
+        "adm2": "Istaravshan District",
+        "region": "Sughd Region"
+      },
+      {
+        "name": "Konibodom",
+        "adm2": "Konibodom District",
+        "region": "Sughd Region"
+      }
+    ],
+    "note": "Not part of the 2025 report table; no screening figures reported here."
+  }
 }

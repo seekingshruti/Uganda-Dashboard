@@ -6,7 +6,7 @@ from string import Template
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEO = json.load(open(os.path.join(ROOT, "data", "tajikistan-geo.json")))
 RAW = json.load(open(os.path.join(ROOT, "data", "tj-sites.json")))
-NAT, SITES = GEO["national"], GEO["sites"]
+NAT, SITES, ROT = GEO["national"], GEO["sites"], GEO["rotation"]
 BY = {s["name"]: s for s in SITES}
 UNMAPPED = RAW["unmapped"]
 
@@ -17,6 +17,7 @@ GUTTER_SITES = ["Panjakent", "Dushanbe", "Rudaki", "Khuroson", "Bokhtar", "J. Ba
 INSIDE = {"Mastchoh": (424, 60), "Dehmoy": (424, 132), "Rasht": (470, 310),
           "Dangara": (408, 432), "Kulob": (424, 556)}
 PIN = "M0 0c-5.5-8-10-13-10-18a10 10 0 1 1 20 0C10-13 5.5-8 0 0Z"
+ROT_LBL = {"Istaravshan": (0, 17), "Ayni": (0, 17), "Konibodom": (0, 17), "Muminobod": (0, -13)}
 
 
 def esc(s):
@@ -56,11 +57,11 @@ def badge(x, y, count, small=False):
             f'y="{(y + dy) if small else (y - 23.6):.1f}">{count}</text>')
 
 
-def pin(s, aria):
+def pin(s, aria, extra=0):
     return (f'<g class="pin" transform="translate({s["x"]:.1f} {s["y"]:.1f})">'
             f'<circle class="halo" cy="-18" r="15"/>'
             f'<path class="pin-body" d="{PIN}"/><circle class="pin-eye" cy="-18" r="3.7"/></g>'
-            f'{badge(s["x"], s["y"], s["devices"])}')
+            f'{badge(s["x"], s["y"], s["devices"] + extra)}')
 
 
 def gutter_label(s):
@@ -68,14 +69,16 @@ def gutter_label(s):
     gx = -14
     leader = f'M{s["x"] - 10.5:.1f} {s["y"] - 18:.1f}L{gx + 34:.1f} {ly:.1f}L{gx:.1f} {ly:.1f}'
     sub = f'{n(s["screened"])} screened'
-    if s["devices"] > 1:
+    if s["name"] == ROT["base"]:
+        sub = f'{s["devices"]} fixed + {ROT["devices"]} mobile &#183; {sub}'
+    elif s["devices"] > 1:
         sub = f'{s["devices"]} devices &#183; {sub}'
     return f'''<g class="site" tabindex="0" role="listitem" data-site="{s['name']}"
      aria-label="{esc(s['name'])} — {esc(s['centre'])}, {n(s['screened'])} people screened">
   <path class="leader" d="{leader}"/>
   <text class="lbl" x="{gx - 8}" y="{ly - 3:.1f}" text-anchor="end">{esc(s['name'])}</text>
   <text class="sub" x="{gx - 8}" y="{ly + 18:.1f}" text-anchor="end">{sub}</text>
-  {pin(s, s['name'])}
+  {pin(s, s['name'], extra=ROT["devices"] if s["name"] == ROT["base"] else 0)}
 </g>'''
 
 
@@ -91,14 +94,44 @@ def inside_label(s):
 </g>'''
 
 
+rot_marks = []
+for d in ROT["districts"]:
+    dx, dy = ROT_LBL[d["name"]]
+    rot_marks.append(
+        f'<g class="rot-mark"><circle cx="{d["x"]:.1f}" cy="{d["y"]:.1f}" r="5.4"/>'
+        f'<circle class="rot-dot" cx="{d["x"]:.1f}" cy="{d["y"]:.1f}" r="1.7"/>'
+        f'<text class="rot-lbl" x="{d["x"] + dx:.1f}" y="{d["y"] + dy:.1f}">{esc(d["name"])}</text></g>')
+
+cx, cy = 628, 34
+callout_lines = [
+    (0, f'{ROT["devices"]} mobile CXR workflow, coordinated from {ROT["base"]}'),
+    (20, "Rotating across " + ", ".join(d["name"] for d in ROT["districts"][:3]) + ","),
+    (38, "and " + ROT["districts"][3]["name"] + " districts"),
+    (64, "Afghan-immigrant active case finding;"),
+    (82, "mobile and high-risk populations"),
+]
+callout = f'''<g class="callout" transform="translate({cx} {cy})">
+  <text class="callout-h" x="0" y="0">{esc(ROT["programme"])} &#183; field operations</text>
+  {"".join(f'<text class="callout-t" x="0" y="{22 + dy}">{esc(t)}</text>' for dy, t in callout_lines)}
+  <rect class="rot-swatch" x="0" y="128" width="17" height="12" rx="2"/>
+  <text class="callout-t" x="25" y="138">districts on the rotation</text>
+</g>'''
+
 km_bar = 100 / NAT["kmPerPt"]
 lakes = "".join(f'<path class="lake" d="{l["d"]}"/>' for l in NAT["lakes"])
 national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTER:.0f} {NAT["height"] + 42:.0f}"
      role="list" aria-label="Map of Tajikistan showing centres operating portable X-ray devices">
-  <defs><clipPath id="tj-clip"><path d="{NAT["country"]}"/></clipPath></defs>
+  <defs>
+    <clipPath id="tj-clip"><path d="{NAT["country"]}"/></clipPath>
+    <pattern id="rot-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="var(--land)"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="var(--clay)" stroke-width="1.3" opacity=".5"/>
+    </pattern>
+  </defs>
   <path class="land" d="{NAT["country"]}"/>
   <g clip-path="url(#tj-clip)">
     <path class="site-district" d="{NAT["siteDistricts"]}"/>
+    <path class="rotation-district" d="{NAT["rotationDistricts"]}"/>
     <path class="district" d="{NAT["districts"]}"/>
     <path class="region" d="{NAT["regions"]}"/>
     <path class="river" d="{NAT["rivers"]}"/>
@@ -106,12 +139,13 @@ national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTE
   </g>
   <path class="border" d="{NAT["country"]}"/>
   <g class="lake-names">
-    <text x="356" y="152">Qayroqum Res.</text>
     <text x="600" y="640" transform="rotate(-8 600 640)">Panj</text>
     <text x="228" y="168">Syr&#8202;Darya</text>
   </g>
 {"".join(gutter_label(BY[k]) for k in GUTTER_SITES)}
 {"".join(inside_label(BY[k]) for k in INSIDE)}
+  {"".join(rot_marks)}
+  {callout}
   <g class="furniture">
     <g transform="translate(-210 52)">
       <path class="compass" d="M0-22 8 8 0 1-8 8Z"/><text class="compass-n" x="0" y="26">N</text>
@@ -129,6 +163,8 @@ national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTE
 # --- footer panels
 total = {k: sum(s[k] for s in SITES) + sum(u[k] for u in UNMAPPED)
          for k in ("devices", "screened", "presumptive", "detected", "confirmed")}
+reported_devices = total["devices"]
+total["devices"] += ROT["devices"]
 steps = [("People screened", total["screened"], None),
          ("Presumptive TB", total["presumptive"], "of those screened"),
          ("Cases detected", total["detected"], "of presumptive cases"),
@@ -147,6 +183,7 @@ by_region = {}
 for s in SITES:
     key = REGION_LABEL[s["region"]]
     by_region[key] = by_region.get(key, 0) + s["devices"]
+by_region[REGION_LABEL[BY[ROT["base"]]["region"]]] += ROT["devices"]
 by_region["Correctional institutions"] = sum(u["devices"] for u in UNMAPPED)
 by_region["Gorno-Badakhshan"] = 0
 rows = sorted(by_region.items(), key=lambda kv: -kv[1])
@@ -165,7 +202,10 @@ tip = {s["name"]: {"n": s["name"], "c": s["centre"], "r": REGION_LABEL[s["region
 html = Template(open(os.path.join(ROOT, "tools", "template_tj.html")).read()).substitute(
     map=national, cascade="".join(cascade), region_rows=region_rows,
     tip_data=json.dumps(tip, separators=(",", ":")),
-    devices=total["devices"], centres=sum(len(s["no"].split(",")) for s in SITES) + len(UNMAPPED),
+    devices=total["devices"], reported_devices=reported_devices,
+    centres=sum(len(s["no"].split(",")) for s in SITES) + len(UNMAPPED),
+    programme=ROT["programme"], rot_base=ROT["base"],
+    rot_districts=", ".join(d["name"] for d in ROT["districts"]),
     screened=n(total["screened"]), confirmed=n(total["confirmed"]),
     unmapped_devices=sum(u["devices"] for u in UNMAPPED),
     unmapped_screened=n(sum(u["screened"] for u in UNMAPPED)))

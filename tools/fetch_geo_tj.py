@@ -142,7 +142,8 @@ def main():
     adm2 = fetch("tjk_ADM2.geojson", f"{GB}/ADM2/geoBoundaries-TJK-ADM2_simplified.geojson")
     ne_lakes = fetch("ne_10m_lakes.geojson", f"{NE}/ne_10m_lakes.geojson")
     ne_rivers = fetch("ne_10m_rivers_lake_centerlines.geojson", f"{NE}/ne_10m_rivers_lake_centerlines.geojson")
-    sites = json.load(open(os.path.join(ROOT, "data", "tj-sites.json")))["sites"]
+    raw = json.load(open(os.path.join(ROOT, "data", "tj-sites.json")))
+    sites, rotation = raw["sites"], raw["rotation"]
 
     country = adm0["features"][0]
     districts = {f["properties"]["shapeName"]: f["geometry"] for f in adm2["features"]}
@@ -176,6 +177,16 @@ def main():
                        "x": round(x, 1), "y": round(y, 1)})
 
     site_districts = [s["adm2"] for s in sites if s.get("adm2")]
+    rotation_districts = [d["adm2"] for d in rotation["districts"]]
+
+    # the rotating workflow has no fixed site: anchor a marker inside each district it covers
+    rotation_points = []
+    for d in rotation["districts"]:
+        (lon, lat), dist = pole_of_inaccessibility(districts[d["adm2"]])
+        x, y = project(lon, lat)
+        print(f"  rotation: {d['name']:12s} -> {d['adm2']:22s} {lat:.4f},{lon:.4f}")
+        rotation_points.append({**d, "lat": round(lat, 4), "lon": round(lon, 4),
+                                "x": round(x, 1), "y": round(y, 1)})
 
     def layers(proj, min_area, tol):
         pick = lambda g: True
@@ -187,6 +198,8 @@ def main():
                                  for n, g in districts.items() if pick(g)),
             "siteDistricts": "".join(to_path(districts[n], proj, min_area, tol)
                                      for n in site_districts if pick(districts[n])),
+            "rotationDistricts": "".join(to_path(districts[n], proj, min_area, tol)
+                                         for n in rotation_districts if pick(districts[n])),
             "rivers": "".join(to_line_path(f["geometry"], proj, tol) for f in rivers if pick(f["geometry"])),
             "lakes": [{"name": f["properties"]["name"], "d": to_path(f["geometry"], proj, min_area, tol)}
                       for f in lakes if pick(f["geometry"])],
@@ -198,6 +211,8 @@ def main():
         "national": {"width": NAT_W, "height": round(height, 1), "bbox": [lon0, lat0, lon1, lat1],
                      "ptPerDeg": round(scale, 4), "kmPerPt": round(111.32 / scale, 5), **national},
         "sites": placed,
+        "rotation": {**{k: v for k, v in rotation.items() if k != "districts"},
+                     "districts": rotation_points},
     }
     data["national"]["lakes"] = [l for l in data["national"]["lakes"] if l["d"]]
 
