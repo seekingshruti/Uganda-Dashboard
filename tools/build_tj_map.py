@@ -6,14 +6,14 @@ from string import Template
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GEO = json.load(open(os.path.join(ROOT, "data", "tajikistan-geo.json")))
 RAW = json.load(open(os.path.join(ROOT, "data", "tj-sites.json")))
-NAT, INS, SITES = GEO["national"], GEO["inset"], GEO["sites"]
+NAT, SITES = GEO["national"], GEO["sites"]
 BY = {s["name"]: s for s in SITES}
 UNMAPPED = RAW["unmapped"]
 
 GUTTER = 270          # label column to the left of the map
 LABEL_GAP = 54
 # sites labelled in the left gutter, and the ones labelled in place out to the east
-GUTTER_SITES = ["Panjakent", "Khuroson", "Bokhtar", "J. Balkhi"]
+GUTTER_SITES = ["Panjakent", "Dushanbe", "Rudaki", "Khuroson", "Bokhtar", "J. Balkhi"]
 INSIDE = {"Mastchoh": (424, 60), "Dehmoy": (424, 132), "Rasht": (470, 310),
           "Dangara": (408, 432), "Kulob": (424, 556)}
 PIN = "M0 0c-5.5-8-10-13-10-18a10 10 0 1 1 20 0C10-13 5.5-8 0 0Z"
@@ -35,18 +35,9 @@ def project(lon, lat, box):
     return pad + (lon - lon0) * k * box["ptPerDeg"], pad + (lat1 - lat) * box["ptPerDeg"]
 
 
-# --- the Dushanbe + Rudaki cluster is boxed on the national map and drawn in the inset
-ilon0, ilat0, ilon1, ilat1 = INS["bbox"]
-bx0, by0 = project(ilon0, ilat1, NAT)
-bx1, by1 = project(ilon1, ilat0, NAT)
-cluster = [BY["Dushanbe"], BY["Rudaki"]]
-cluster_devices = sum(s["devices"] for s in cluster)
-cluster_screened = sum(s["screened"] for s in cluster)
-
-# --- stack the gutter labels: the cluster box takes a slot alongside the single sites
-slots = [{"key": s["name"], "y": s["y"]} for s in (BY[k] for k in GUTTER_SITES)]
-slots.append({"key": "__cluster", "y": (by0 + by1) / 2})
-slots.sort(key=lambda s: s["y"])
+# --- stack the gutter labels so they never collide
+slots = sorted(({"key": s["name"], "y": s["y"]} for s in (BY[k] for k in GUTTER_SITES)),
+               key=lambda s: s["y"])
 last = -1e9
 for s in slots:
     s["ly"] = max(s["y"], last + LABEL_GAP)
@@ -100,56 +91,6 @@ def inside_label(s):
 </g>'''
 
 
-cluster_ly = LY["__cluster"]
-cluster_block = f'''<g class="detail-box">
-  <rect x="{bx0:.1f}" y="{by0:.1f}" width="{bx1 - bx0:.1f}" height="{by1 - by0:.1f}" rx="4"/>
-  <path class="leader" d="M{bx0:.1f} {(by0 + by1) / 2:.1f}L{-14 + 34:.1f} {cluster_ly:.1f}L-14 {cluster_ly:.1f}"/>
-  <text class="lbl" x="-22" y="{cluster_ly - 3:.1f}" text-anchor="end">Dushanbe &amp; Rudaki</text>
-  <text class="sub" x="-22" y="{cluster_ly + 18:.1f}" text-anchor="end">{cluster_devices} devices &#183; {n(cluster_screened)} screened</text>
-</g>
-<g class="site dot" data-site="Dushanbe" aria-hidden="true">
-  <circle class="dot-mark" cx="{BY['Dushanbe']['x']:.1f}" cy="{BY['Dushanbe']['y']:.1f}" r="4.6"/>
-  {badge(BY['Dushanbe']['x'], BY['Dushanbe']['y'], 2, small=True)}
-</g>
-<g class="site dot" data-site="Rudaki" aria-hidden="true">
-  <circle class="dot-mark" cx="{BY['Rudaki']['x']:.1f}" cy="{BY['Rudaki']['y']:.1f}" r="4.6"/>
-</g>'''
-
-# --- the inset plate, drawn into the empty canvas north-east of the country
-INS_LBL = {"Dushanbe": (-13, "end"), "Rudaki": (13, "start")}
-ins_marks = []
-for s in cluster:
-    dx, anchor = INS_LBL[s["name"]]
-    ins_marks.append(
-        f'<g class="site" tabindex="0" role="listitem" data-site="{s["name"]}" '
-        f'aria-label="{esc(s["name"])} — {esc(s["centre"])}">'
-        f'<circle class="halo" cx="{s["ix"]:.1f}" cy="{s["iy"]:.1f}" r="11"/>'
-        f'<circle class="dot-mark" cx="{s["ix"]:.1f}" cy="{s["iy"]:.1f}" r="4.6"/>'
-        f'{badge(s["ix"], s["iy"], s["devices"], small=True)}'
-        f'<text class="ins-lbl" x="{s["ix"] + dx:.1f}" y="{s["iy"] - 9:.1f}" text-anchor="{anchor}">{esc(s["name"])}</text>'
-        f'<text class="ins-sub" x="{s["ix"] + dx:.1f}" y="{s["iy"] + 5:.1f}" text-anchor="{anchor}">'
-        f'{s["devices"]}&#8201;&#215;&#8201;{n(s["screened"])}</text></g>')
-
-ins_x, ins_y = 690, 10
-ins_km = 10 / INS["kmPerPt"]
-inset_plate = f'''<g class="inset-plate" transform="translate({ins_x} {ins_y})">
-  <defs><clipPath id="tj-ins-clip"><rect x="0" y="0" width="{INS["width"]:.0f}" height="{INS["height"]:.0f}" rx="5"/></clipPath></defs>
-  <g clip-path="url(#tj-ins-clip)">
-    <rect class="ins-bg" x="0" y="0" width="{INS["width"]:.0f}" height="{INS["height"]:.0f}"/>
-    <path class="land" d="{INS["country"]}"/>
-    <path class="site-district" d="{INS["siteDistricts"]}"/>
-    <path class="district" d="{INS["districts"]}"/>
-    <path class="river" d="{INS["rivers"]}"/>
-    {"".join(ins_marks)}
-    <g class="furniture" transform="translate(12 {INS["height"] - 14:.0f})">
-      <rect class="bar" x="0" y="0" width="{ins_km:.1f}" height="4"/>
-      <text class="tick" x="{ins_km + 7:.1f}" y="5">10&#8201;km</text>
-    </g>
-  </g>
-  <rect class="ins-frame" x="0.5" y="0.5" width="{INS["width"] - 1:.0f}" height="{INS["height"] - 1:.0f}" rx="5"/>
-  <text class="ins-title" x="0" y="-8">Dushanbe &amp; Rudaki &#8212; boxed area, {NAT["kmPerPt"] / INS["kmPerPt"]:.1f}&#215;</text>
-</g>'''
-
 km_bar = 100 / NAT["kmPerPt"]
 lakes = "".join(f'<path class="lake" d="{l["d"]}"/>' for l in NAT["lakes"])
 national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTER:.0f} {NAT["height"] + 42:.0f}"
@@ -169,10 +110,8 @@ national = f'''<svg class="map-svg" viewBox="-{GUTTER} -42 {NAT["width"] + GUTTE
     <text x="600" y="640" transform="rotate(-8 600 640)">Panj</text>
     <text x="228" y="168">Syr&#8202;Darya</text>
   </g>
-  {cluster_block}
 {"".join(gutter_label(BY[k]) for k in GUTTER_SITES)}
 {"".join(inside_label(BY[k]) for k in INSIDE)}
-  {inset_plate}
   <g class="furniture">
     <g transform="translate(-210 52)">
       <path class="compass" d="M0-22 8 8 0 1-8 8Z"/><text class="compass-n" x="0" y="26">N</text>
@@ -220,7 +159,7 @@ tip = {s["name"]: {"n": s["name"], "c": s["centre"], "r": REGION_LABEL[s["region
                    "d": s["devices"], "s": n(s["screened"]), "p": n(s["presumptive"]),
                    "x": n(s["detected"]), "b": n(s["confirmed"]),
                    "g": f'{s["lat"]:.4f}°N, {s["lon"]:.4f}°E',
-                   "a": "district centre point" if s["anchor"] == "district" else "city"}
+                   "a": "district interior point" if s["anchor"] == "district" else "city"}
        for s in SITES}
 
 html = Template(open(os.path.join(ROOT, "tools", "template_tj.html")).read()).substitute(

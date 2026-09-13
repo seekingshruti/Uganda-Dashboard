@@ -95,9 +95,10 @@ python3 tools/build_tj_map.py
   That keeps a marker unambiguously inside the district it belongs to. The markers say which
   district a device serves; they are not facility addresses.
 * **Districts hosting a device are shaded**, so coverage reads from the fill as well as the pins.
-* **The Dushanbe cluster** — Dushanbe city (2 devices, report rows 1 and 2) and Rudaki sit ~12 km
-  apart, too close to label separately, so they are boxed on the national map and drawn at 2.8x
-  in the inset placed in the empty canvas north-east of the country.
+* **The Dushanbe pair** — Dushanbe city (2 devices, report rows 1 and 2) and Rudaki sit ~12 km
+  apart, so their markers overlap slightly at national scale. They are drawn as two separate
+  markers with a paper casing and their own labels rather than an inset, so the whole network
+  reads in a single view that can be screenshotted as one image.
 
 ### Known caveats
 
