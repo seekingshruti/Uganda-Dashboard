@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Training Resource Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FAF7F6; --card:#FFFFFF; --ink:#1B2133; --muted:#636B81; --rule:#EBE0DD;
+  --mark:#1C2C6E; --mark-hi:#4054C6; --clay:#B96C61; --tint:#F6ECEA; --ok:#2F7D5B;
+  --shadow:0 1px 2px rgba(43,26,24,.06), 0 10px 30px -18px rgba(43,26,24,.28);
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14171F; --card:#1C2029; --ink:#E9E6E4; --muted:#A0A6B6; --rule:#2E3340;
+    --mark:#9FB0FF; --mark-hi:#C2CCFF; --clay:#E0978C; --tint:#2A2426; --ok:#6CC59B;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14171F; --card:#1C2029; --ink:#E9E6E4; --muted:#A0A6B6; --rule:#2E3340;
+  --mark:#9FB0FF; --mark-hi:#C2CCFF; --clay:#E0978C; --tint:#2A2426; --ok:#6CC59B;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--mark)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:56px 0 28px;border-bottom:1px solid var(--rule)}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--clay)}
+h1{font:500 clamp(34px,6vw,52px)/1.05 var(--serif);margin:12px 0 12px;letter-spacing:-.01em}
+.lede{color:var(--muted);max-width:640px;margin:0}
+nav{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--rule)}
+nav ul{list-style:none;margin:0;padding:10px 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav a{display:block;white-space:nowrap;padding:6px 12px;border-radius:999px;font-size:14px;font-weight:600;color:var(--muted);text-decoration:none}
+nav a:hover{background:var(--tint);color:var(--ink)}
+main{padding:32px 0 72px;display:grid;gap:20px}
+section{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:24px;box-shadow:var(--shadow);scroll-margin-top:64px}
+.head{display:flex;gap:14px;align-items:baseline;margin-bottom:6px}
+.num{font:500 13px var(--mono);color:var(--clay)}
+h2{font:500 26px/1.2 var(--serif);margin:0}
+.desc{color:var(--muted);margin:0 0 18px;font-size:16px}
+h3{font:700 13px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.list li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.list .t{font-weight:600}
+.list .s{display:block;font-size:14px;color:var(--muted);font-weight:400}
+.btn{display:inline-block;padding:7px 14px;border-radius:8px;background:var(--mark);color:var(--card);font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--mark-hi)}
+.pending{font:500 12px var(--mono);color:var(--clay);background:var(--tint);padding:5px 10px;border-radius:6px;white-space:nowrap}
+.langs{display:flex;flex-wrap:wrap;gap:8px}
+.lang{display:flex;align-items:center;gap:8px;border:1px solid var(--rule);border-radius:8px;padding:8px 12px;font-size:15px}
+.lang .dot{width:8px;height:8px;border-radius:50%;background:var(--rule)}
+.lang.live .dot{background:var(--ok)}
+.table{width:100%;border-collapse:collapse;font-size:15px}
+.table th{text-align:left;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 8px 8px 0;border-bottom:1px solid var(--rule)}
+.table td{padding:10px 8px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.mono{font-family:var(--mono);font-size:14px;word-break:break-all}
+.scroll{overflow-x:auto}
+.note{font-size:14px;color:var(--muted);background:var(--tint);border-radius:8px;padding:10px 14px;margin-top:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.fields{margin:0;padding-left:18px;font-size:15px}
+.fields li{margin:3px 0}
+.check{list-style:none;margin:0;padding:0}
+.check li{border-bottom:1px solid var(--rule)}
+.check label{display:flex;gap:12px;padding:10px 0;cursor:pointer;font-size:16px}
+.check input{width:18px;height:18px;margin-top:3px;accent-color:var(--mark);flex:none}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.progress{font:500 13px var(--mono);color:var(--muted)}
+.ghost{border:1px solid var(--rule);background:none;color:var(--ink);border-radius:8px;padding:7px 14px;font:600 14px var(--sans);cursor:pointer}
+footer{border-top:1px solid var(--rule);padding:20px 0 40px;color:var(--muted);font-size:14px}
+@media print{nav,.btn,.ghost{display:none} section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">qXR · qTrack · Site rollout</div>
+    <h1>Training Resource Centre</h1>
+    <p class="lede">Everything a trainer needs to plan, run and close out a site training: decks, demo logins, trainee quiz, feedback, certificates, sign-off reports and the connectivity checklist.</p>
+  </div>
+</header>
+
+<nav aria-label="Sections">
+  <div class="wrap"><ul>
+    <li><a href="#deck">Training deck</a></li>
+    <li><a href="#tutorial">Tutorial</a></li>
+    <li><a href="#demo">Demo accounts</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#feedback">Feedback form</a></li>
+    <li><a href="#certificate">Certificate</a></li>
+    <li><a href="#report">Installation report</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#connectivity">Connectivity checklist</a></li>
+  </ul></div>
+</nav>
+
+<main class="wrap">
+
+  <section id="deck">
+    <div class="head"><span class="num">01</span><h2>Training deck</h2></div>
+    <p class="desc">Download a copy of the master deck and customise it for the country, programme and devices. Do not edit the master file directly.</p>
+    <ul class="list">
+      <li><span class="t">Training Master Deck 2026<span class="s">Master template — make a copy before editing</span></span>
+        <a class="btn" href="https://qure1.sharepoint.com/:p:/s/DesignTeam/IQB1O4_RLVDBRJ4c67usCCX0AXViujzpehBcwTSmbmyDeGU?e=fQiKgH" target="_blank" rel="noopener">Open deck</a></li>
+      <li><span class="t">GDF Mongolia Training Deck<span class="s">Example of a customised country deck</span></span>
+        <a class="btn" href="https://qure1-my.sharepoint.com/:p:/g/personal/parshva_kuvadia_qure_ai/IQDBPThGiV_tTKcUAVqkSvX9AdwRRVLh0aPd_-Xz_5QSNKs?e=lYu9lV" target="_blank" rel="noopener">Open deck</a></li>
+      <li><span class="t">MinXray training deck<span class="s">Device handling, mounting and acquisition</span></span>
+        <span class="pending">Link pending</span></li>
+    </ul>
+    <h3>Translations</h3>
+    <div class="langs">
+      <span class="lang live"><span class="dot"></span>English</span>
+      <span class="lang"><span class="dot"></span>French</span>
+      <span class="lang"><span class="dot"></span>Portuguese</span>
+      <span class="lang"><span class="dot"></span>Spanish</span>
+      <span class="lang"><span class="dot"></span>Russian</span>
+      <span class="lang"><span class="dot"></span>Bahasa</span>
+    </div>
+    <h3>User manuals</h3>
+    <ul class="list">
+      <li><span class="t">qXR / qTrack user manual<span class="s">All available languages</span></span><span class="pending">Link pending</span></li>
+    </ul>
+  </section>
+
+  <section id="tutorial">
+    <div class="head"><span class="num">02</span><h2>Tutorial</h2></div>
+    <p class="desc">Self-paced walkthrough for trainees to revisit after the session.</p>
+    <ul class="list">
+      <li><span class="t">qTrack walkthrough<span class="s">Worklist, adding a patient, lab results, dashboard, search &amp; filter, sync</span></span><span class="pending">Link pending</span></li>
+      <li><span class="t">qXR reading &amp; reporting<span class="s">Interpreting AI outputs and heatmaps</span></span><span class="pending">Link pending</span></li>
+    </ul>
+  </section>
+
+  <section id="demo">
+    <div class="head"><span class="num">03</span><h2>Demo accounts</h2></div>
+    <p class="desc">Use these for live demos and hands-on practice. Never enter real patient data.</p>
+    <div class="scroll"><table class="table">
+      <thead><tr><th>Username</th><th>Use for</th><th>Password</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">gh_demo1@qure.ai</td><td>qTrack TB Pro</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">gh_demo2@qure.ai</td><td>Pediatric TB</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">gh_demo4@qure.ai</td><td>Lung cancer (LC)</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">demo_french@qure.ai</td><td>French interface</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">demo_portuguese@qure.ai</td><td>Portuguese interface</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">demo_spanish@qure.ai</td><td>Spanish interface</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">demo_russian@qure.ai</td><td>Russian interface</td><td>From CS Ops</td></tr>
+        <tr><td class="mono">demo_bahasa@qure.ai</td><td>Bahasa interface</td><td>From CS Ops</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Passwords are kept out of this page on purpose. Ask the CS Ops team for them, or see the internal credentials sheet.</p>
+  </section>
+
+  <div class="grid2">
+    <section id="quiz">
+      <div class="head"><span class="num">04</span><h2>Trainee quiz</h2></div>
+      <p class="desc">Run at the end of day one and again as a refresher before the practical case studies.</p>
+      <ul class="list">
+        <li><span class="t">Post-training quiz</span><span class="pending">Link pending</span></li>
+      </ul>
+    </section>
+
+    <section id="feedback">
+      <div class="head"><span class="num">05</span><h2>Feedback form</h2></div>
+      <p class="desc">Share with every trainee before they leave. Results feed the training report.</p>
+      <ul class="list">
+        <li><span class="t">Training feedback form</span><span class="pending">Link pending</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <section id="certificate">
+    <div class="head"><span class="num">06</span><h2>Training certificate</h2></div>
+    <p class="desc">Editable certificate issued to each trainee who completes the session and quiz.</p>
+    <ul class="list">
+      <li><span class="t">Certificate template<span class="s">Name, role, facility, training dates, trainer signature</span></span><span class="pending">Link pending</span></li>
+    </ul>
+    <h3>Logos to include</h3>
+    <ul class="fields">
+      <li>Qure.ai</li>
+      <li>Ministry of Health / National TB Programme</li>
+      <li>Funding partner (e.g. Global Fund, Stop TB Partnership / GDF)</li>
+      <li>Procurement or implementing partner (e.g. PFSCM, UNOPS, local NGO)</li>
+      <li>Device partner where relevant (e.g. MinXray)</li>
+    </ul>
+    <p class="note">Confirm logo usage with each partner before printing. Use the latest approved versions.</p>
+  </section>
+
+  <section id="report">
+    <div class="head"><span class="num">07</span><h2>Training &amp; installation report</h2></div>
+    <p class="desc">Completed at each site and signed by the end user to confirm handover.</p>
+    <ul class="list">
+      <li><span class="t">Report format<span class="s">Word template — fill one per site</span></span><span class="pending">Link pending</span></li>
+    </ul>
+    <h3>The report should cover</h3>
+    <ul class="fields">
+      <li>Site, district, region and date(s) of visit</li>
+      <li>Devices installed: serial numbers for laptop, X-ray, dongle / Starlink</li>
+      <li>Software versions and licence activation confirmed</li>
+      <li>Test scans run and results visible on dashboard</li>
+      <li>Trainees: name, role, attendance, quiz score</li>
+      <li>Open issues and agreed next steps</li>
+      <li>End-user name, designation, signature, facility stamp and date</li>
+      <li>Qure.ai trainer name and signature</li>
+    </ul>
+  </section>
+
+  <section id="testimonials">
+    <div class="head"><span class="num">08</span><h2>Training feedback &amp; testimonials</h2></div>
+    <p class="desc">Collected quotes, photos (with consent) and summarised feedback from past trainings.</p>
+    <ul class="list">
+      <li><span class="t">Feedback summary &amp; testimonials<span class="s">By country and training date</span></span><span class="pending">Link pending</span></li>
+      <li><span class="t">Training photos<span class="s">Consent confirmed only</span></span><span class="pending">Link pending</span></li>
+    </ul>
+  </section>
+
+  <section id="connectivity">
+    <div class="head"><span class="num">09</span><h2>Dongles, Starlink &amp; extra internet</h2></div>
+    <p class="desc">Run through this before travel and again on site. Ticks are saved in this browser only.</p>
+    <h3>Before travel</h3>
+    <ul class="check" data-group="pre">
+      <li><label><input type="checkbox"><span>Confirm site connectivity: mobile coverage, which network is strongest, existing Wi-Fi</span></label></li>
+      <li><label><input type="checkbox"><span>Dongles procured for the right network and unlocked; one per system plus a spare</span></label></li>
+      <li><label><input type="checkbox"><span>Local SIM cards bought, registered and loaded with enough data</span></label></li>
+      <li><label><input type="checkbox"><span>Starlink kit packed (dish, router, cables, mount) if sites have no usable coverage</span></label></li>
+      <li><label><input type="checkbox"><span>Starlink account active with a plan valid in the country; import / customs cleared</span></label></li>
+      <li><label><input type="checkbox"><span>Power plan: extension boards, adapters, UPS or power bank for the router</span></label></li>
+      <li><label><input type="checkbox"><span>Remote-access tool installed and tested so Tech Ops can support after you leave</span></label></li>
+    </ul>
+    <h3>On site</h3>
+    <ul class="check" data-group="site">
+      <li><label><input type="checkbox"><span>Each laptop connects to the internet; speed test noted in the report</span></label></li>
+      <li><label><input type="checkbox"><span>Test scan uploads and syncs to the dashboard</span></label></li>
+      <li><label><input type="checkbox"><span>Offline mode tested: scan offline, then confirm sync when connectivity returns</span></label></li>
+      <li><label><input type="checkbox"><span>Site staff shown how to top up data and restart the dongle / router</span></label></li>
+      <li><label><input type="checkbox"><span>Who pays for ongoing data agreed and written into the report</span></label></li>
+      <li><label><input type="checkbox"><span>Dongle, SIM and Starlink serial numbers recorded in the installation report</span></label></li>
+    </ul>
+    <div class="bar">
+      <span class="progress" id="progress"></span>
+      <span><button class="ghost" onclick="window.print()">Print</button> <button class="ghost" id="reset">Clear ticks</button></span>
+    </div>
+  </section>
+
+</main>
+
+<footer><div class="wrap">Resources marked “Link pending” will be added as they are shared. Contact the Operations &amp; Strategy team to add or update a resource.</div></footer>
+
+<script>
+(function(){
+  var KEY='training-connectivity-checklist';
+  var boxes=[].slice.call(document.querySelectorAll('.check input'));
+  var saved=[];
+  try{saved=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){}
+  boxes.forEach(function(b,i){b.checked=!!saved[i];b.addEventListener('change',update)});
+  document.getElementById('reset').addEventListener('click',function(){boxes.forEach(function(b){b.checked=false});update()});
+  function update(){
+    var state=boxes.map(function(b){return b.checked});
+    try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+    document.getElementById('progress').textContent=state.filter(Boolean).length+' of '+boxes.length+' done';
+  }
+  update();
+})();
+</script>
+</body>
+</html>

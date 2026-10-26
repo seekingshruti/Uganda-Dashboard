@@ -7,6 +7,7 @@ district outlines, real hydrology, and markers placed by coordinate rather than 
 | --- | --- | --- |
 | Uganda site network | `index.html` | `uganda-site-map.png` |
 | Tajikistan portable X-ray devices, 2025 | `tajikistan.html` | `tajikistan-xray-map.png` |
+| Training resource centre | `training.html` | — |
 
 Each map is a single self-contained HTML file with no runtime dependencies, generated from a
 data file plus a template. The two share a palette and type system but not code — the Uganda
